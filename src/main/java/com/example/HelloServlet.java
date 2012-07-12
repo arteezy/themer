@@ -17,7 +17,7 @@ public class HelloServlet extends HttpServlet {
             throws ServletException, IOException {
         ServletOutputStream out = resp.getOutputStream();
         
-        out.write("Hello Heroku".getBytes());
+        out.write("DEP-LOY-ED!".getBytes());
         out.flush();
         out.close();
     }
