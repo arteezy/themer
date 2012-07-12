@@ -1,0 +1,25 @@
+@import "bootstrap.min.css";
+@import "bootstrap-responsive.min.css";
+
+body {
+	font-size: 103%;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+#ar {
+	text-align: right;
+}
+
+#mytitle {
+	margin-bottom: 25px;
+}
+
+#mybtn {
+	margin-bottom: -25px;
+}
+
+#myta {
+	width: 97%;
+	font-size: 90%;
+}
