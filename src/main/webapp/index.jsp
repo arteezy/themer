@@ -52,7 +52,7 @@ request.setCharacterEncoding("UTF-8");
 												<%= me.getKey() %>
 											</td>
 											<td id = "ar">
-												<%= String.format("%.2f%", Double.valueOf(me.getValue().toString())*100) %>	
+												<%= String.format("%.2f", Double.valueOf(me.getValue().toString())*100)+"%" %>	
 											</td>
 										</tr>
 										<%
