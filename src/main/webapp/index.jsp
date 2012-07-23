@@ -1,4 +1,5 @@
 <jsp:useBean id="myta" class="com.art.Themer" scope="page"/>
+<%@ page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
@@ -27,11 +28,42 @@ request.setCharacterEncoding("UTF-8");
 						</fieldset>
 					</form>
 				</div>
-				<%
+				<% 
 					String text = null;
 					if (request.getParameter("text") != null) {
-						text = (String) request.getParameter("text");
-						out.print(myta.getThemes(text));
+						%>
+						<div>
+							<table class = "table table-striped">
+								<thead>
+									<tr>
+										<th>Тема</th>
+										<th id="ar">Вероятность</th>
+									</tr>								
+								</thead>
+								<tbody>
+								<%
+									text = (String) request.getParameter("text");
+									HashMap result = myta.getThemes(text);
+									Set set = result.entrySet();
+									Iterator i = set.iterator();
+									while(i.hasNext()) {
+										Map.Entry me = (Map.Entry)i.next();
+										%>
+										<tr>
+											<td>
+												<%= me.getKey() %>
+											</td>
+											<td id = "ar">
+												<%= me.getValue() %>	
+											</td>
+										</tr>
+										<%
+									}									
+								%>
+								</tbody>
+							</table>
+						</div>
+						<%
 					}
 				%>
 			</div>
