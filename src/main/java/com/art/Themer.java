@@ -112,16 +112,13 @@ public class Themer {
 			}
 
 			return result;
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			System.exit(1);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(2);
+			System.exit(1);
 		} catch (URISyntaxException e) {			
 			e.printStackTrace();
-			System.exit(3);
+			System.exit(2);
 		}
 		return null;
 	}
