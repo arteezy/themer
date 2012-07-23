@@ -11,7 +11,7 @@
     
   <servlet>
     <servlet-name>hello</servlet-name>
-    <servlet-class>com.example.HelloServlet</servlet-class>
+    <servlet-class>com.art.HelloServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
