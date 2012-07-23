@@ -1,4 +1,4 @@
-<%--jsp:useBean id="myta" class="art.Themer" scope="page"/--%>
+<jsp:useBean id="myta" class="com.art.Themer" scope="page"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
@@ -27,14 +27,13 @@ request.setCharacterEncoding("UTF-8");
 						</fieldset>
 					</form>
 				</div>
-				<%--
-					String word = null;
+				<%
+					String text = null;
 					if (request.getParameter("text") != null) {
-						word = (String) request.getParameter("text");
-						myta.setWord(word);
-						out.print(myta.process());
+						text = (String) request.getParameter("text");
+						out.print(myta.getThemes(text));
 					}
-				--%>
+				%>
 			</div>
 		</div>
 	</div>

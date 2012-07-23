@@ -168,8 +168,8 @@ public class Themer {
 		return hm;
 	}
 
-	public static void main(String[] args) {
-		String text = "Быть энтузиасткой сделалось ее общественным положением, и иногда, когда\n" +
+	public static HashMap getThemes(String text) {
+		text = "Быть энтузиасткой сделалось ее общественным положением, и иногда, когда\n" +
 				"  ей даже того не хотелось, она, чтобы не обмануть ожиданий людей, знавших ее,\n" +
 				"  делалась энтузиасткой.  Сдержанная  улыбка,  игравшая постоянно на лице Анны\n" +
 				"  Павловны, хотя и не шла к  ее  отжившим чертам, выражала, как у избалованных\n" +
@@ -206,5 +206,6 @@ public class Themer {
 			System.out.print(me.getKey().toString().trim() + ": ");
 			System.out.println(me.getValue());
 		}
+		return themes;
 	}
 }
