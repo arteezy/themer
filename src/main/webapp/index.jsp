@@ -1,5 +1,6 @@
 <jsp:useBean id="myta" class="com.art.Themer" scope="page"/>
 <%@ page import="java.util.*" %>
+<%@ page import="java.io.PrintStream %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
@@ -52,7 +53,7 @@ request.setCharacterEncoding("UTF-8");
 												<%= me.getKey() %>
 											</td>
 											<td id = "ar">
-												<%= me.getValue() %>	
+												<%= System.out.format("%.2f", Double.valueOf(me.getValue().toString())); %>	
 											</td>
 										</tr>
 										<%

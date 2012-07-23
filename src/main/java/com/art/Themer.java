@@ -169,13 +169,6 @@ public class Themer {
 		HashMap themes = theme(text);
 		Set set = sortTopThemes(themes).entrySet();
 		Iterator i = set.iterator();
-		while(i.hasNext()) {
-			Map.Entry me = (Map.Entry)i.next();
-			System.out.print(me.getKey().toString().trim() + ": ");
-			System.out.println(me.getValue());
-		}
-		Set themeset = sortTopThemes(themes).entrySet();
-		Iterator themeit = themeset.iterator();
-		return themeit;
+		return i;
 	}
 }
