@@ -101,12 +101,11 @@ public class Themer {
 				Double num = Double.valueOf(val.toString());
 				if (num < min) min = num;
 			}
-			double quarter = 0.25;
 			Set pset = result.entrySet();
 			Iterator pi = pset.iterator();
 			while(pi.hasNext()) {
 				Map.Entry me = (Map.Entry)pi.next();
-				double p = Double.valueOf(me.getValue().toString()) / (max*quarter + min + max);
+				double p = Double.valueOf(me.getValue().toString()) / (max/10 + min + max);
 				result.put(me.getKey(),p);
 			}
 
