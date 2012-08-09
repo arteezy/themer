@@ -1,7 +1,6 @@
 <jsp:useBean id="myta" class="com.art.Themer" scope="page"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
-<%@ page trimDirectiveWhitespaces="true" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
 %>
@@ -24,15 +23,11 @@ request.setCharacterEncoding("UTF-8");
 				<div class='well'>
 					<form action='index.jsp' align='center' method='POST'>
 						<fieldset>
-							<textarea id='myta' name='text' rows='9' type='text'>
-								<%
+							<textarea id='myta' name='text' rows='9' type='text'><%
 									if (request.getParameter("text") != null) {
-										%>
-										<%= request.getParameter("text")%>
-										<%
+										%><%= request.getParameter("text")%><%
 									}
-								%>
-							</textarea>
+								%></textarea>
 							<button class='btn btn-large btn-primary' id='mybtn' type='submit'>Отправить</button>
 						</fieldset>
 					</form>
