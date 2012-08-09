@@ -52,7 +52,6 @@ public class Themer {
 	public static HashMap theme(String text) {
 		Connection conn = null;
 		try {
-			//Class.forName("org.postgresql.Driver");
 			conn = getConnection();
 
 			HashMap result = new HashMap();
