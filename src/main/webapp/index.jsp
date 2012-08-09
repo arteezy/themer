@@ -34,7 +34,7 @@ request.setCharacterEncoding("UTF-8");
 				</div>
 				<% 
 					String text = null;
-					if (request.getParameter("text") != null || request.getParameter("text") != "") {
+					if (request.getParameter("text") != null && request.getParameter("text") != "") {
 						%>
 						<div>
 							<table class = "table table-striped">
