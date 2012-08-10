@@ -71,7 +71,7 @@ request.setCharacterEncoding("UTF-8");
 			</div>
 		</div>
 	</div>
-	<script src='js/jquery.min.js'></script>
-	<script src='js/bootstrap.min.js'></script>
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+	<script src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js'></script>
 </body>
 </html>
