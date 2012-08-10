@@ -1,4 +1,4 @@
-package com.art;
+package com.art.themer;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;

@@ -1,4 +1,4 @@
-<jsp:useBean id="myta" class="com.art.Themer" scope="page"/>
+<jsp:useBean id="myta" class="com.art.themer.Themer" scope="page"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
 <%
