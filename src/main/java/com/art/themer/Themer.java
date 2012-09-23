@@ -49,16 +49,16 @@ public class Themer {
 		return result;
 	}
 
-	public static HashMap theme(String text) {
+	public static HashMap<String, Double> theme(String text) {
 		Connection conn = null;
 		try {
 			conn = getConnection();
 
-			HashMap result = new HashMap();
+			HashMap<String, Double> result = new HashMap<String, Double>();
 
-			HashMap hm = filter(text);
-			Set set = hm.entrySet();
-			Iterator i = set.iterator();
+			HashMap<String, Integer> hm = filter(text);
+			Set<?> set = hm.entrySet();
+			Iterator<?> i = set.iterator();
 			while(i.hasNext()) {
 				Map.Entry me = (Map.Entry)i.next();
 				String k = (String) me.getKey();
@@ -81,8 +81,8 @@ public class Themer {
 				st.close();
 			}
 
-			Set rset = sortTopThemes(result).entrySet();
-			Iterator ri = rset.iterator();
+			Set<?> rset = sortTopThemes(result).entrySet();
+			Iterator<?> ri = rset.iterator();
 			int cutter = 0;
 			while(ri.hasNext()) {
 				cutter++;
@@ -91,7 +91,7 @@ public class Themer {
 			}
 
 			double max = 0;
-			Collection col = result.values();
+			Collection<Double> col = result.values();
 			for (Object val : col) {
 				Double num = Double.valueOf(val.toString());
 				if (num > max) max = num;
@@ -101,12 +101,12 @@ public class Themer {
 				Double num = Double.valueOf(val.toString());
 				if (num < min) min = num;
 			}
-			Set pset = result.entrySet();
-			Iterator pi = pset.iterator();
+			Set<?> pset = result.entrySet();
+			Iterator<?> pi = pset.iterator();
 			while(pi.hasNext()) {
 				Map.Entry me = (Map.Entry)pi.next();
 				double p = Double.valueOf(me.getValue().toString()) / (max/10 + min + max);
-				result.put(me.getKey(),p);
+				result.put((String) me.getKey(),p);
 			}
 
 			return result;
@@ -121,10 +121,10 @@ public class Themer {
 		return null;
 	}
 
-	public static HashMap filter(String text) {
+	public static HashMap<String, Integer> filter(String text) {
 		String[] words = text.replaceAll("[^а-яА-Я\\s]", "").split("\\s+");
 
-		HashMap hm = new HashMap();
+		HashMap<String, Integer> hm = new HashMap<String, Integer>();
 
 		for (String kword : words) {
 			kword = Stemmer.stem(kword.toLowerCase());
@@ -151,8 +151,8 @@ public class Themer {
 			hm.remove(slword);
 		}
 
-		Set set = sortTopWords(hm).entrySet();
-		Iterator i = set.iterator();
+		Set<?> set = sortTopWords(hm).entrySet();
+		Iterator<?> i = set.iterator();
 		int cutter = 0;
 		while(i.hasNext()) {
 			cutter++;
@@ -163,10 +163,9 @@ public class Themer {
 		return hm;
 	}
 
-	public static Iterator getThemes(String text) {
-		HashMap themes = theme(text);
-		Set set = sortTopThemes(themes).entrySet();
-		Iterator i = set.iterator();
-		return i;
+	public static Set<?> getThemes(String text) {
+		HashMap<String, Double> themes = theme(text);
+		Set<?> set = sortTopThemes(themes).entrySet();		
+		return set;
 	}
 }

@@ -47,7 +47,8 @@ request.setCharacterEncoding("UTF-8");
 								<tbody>
 								<%
 									text = (String) request.getParameter("text");
-									Iterator result = myta.getThemes(text);
+									Set set = myta.getThemes(text);
+									Iterator result = set.iterator();
 									while(result.hasNext()) {
 										Map.Entry me = (Map.Entry)result.next();
 										%>

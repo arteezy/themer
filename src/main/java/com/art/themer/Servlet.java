@@ -18,7 +18,7 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         ServletOutputStream out = resp.getOutputStream();
         
-        out.write("Succesful deploy!".getBytes());
+        out.write("Successful deploy!".getBytes());
         out.flush();
         out.close();
     }
