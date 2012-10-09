@@ -13,12 +13,9 @@ The algorithm will analyze the frequency of words from a given text. Then it wil
 ## Technologies used
 
 * Java
-* JSP
-* Servlets
-* JavaBeans
+* Jetty
+* PostgreSQL
 * Maven
-* Jetty web-server
-* PostgreSQL DB
 
 ## Running the application
 
