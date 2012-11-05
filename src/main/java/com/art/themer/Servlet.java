@@ -14,10 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Servlet extends HttpServlet {
 
 	@Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        ServletOutputStream out = resp.getOutputStream();
-        
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletOutputStream out = resp.getOutputStream();        
         out.write("Successful deploy!".getBytes());
         out.flush();
         out.close();
