@@ -8,7 +8,7 @@ The current version of this application is running on http://themer.herokuapp.co
 
 ## How it works
 
-The algorithm will analyze the frequency of words from a given text. Then it will fetch these words from the dictionary. The dictionary is built using Data Mining methods based on data from Yandex.Catalog (http://catalog.yandex.ru/) web-service.
+The algorithm will analyze the frequency of words from a given text. Then it will fetch these words from the dictionary. The dictionary is built using Data Mining methods based on data from [Yandex.Catalog](http://catalog.yandex.ru/) web-service.
 
 ## Technologies used
 
@@ -31,4 +31,4 @@ Then run it with:
 
 ## Deploying
 
-The project is ready to deploy on Heroku (http://www.heroku.com/) via git.
+The project is ready to deploy on [Heroku](http://www.heroku.com/) via git.
