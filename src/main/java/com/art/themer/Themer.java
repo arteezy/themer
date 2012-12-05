@@ -82,14 +82,14 @@ public class Themer {
 				st.setString(1,k);
 				ResultSet rs = st.executeQuery();
 				while (rs.next()) {
-					PreparedStatement st2 = conn.prepareStatement("SELECT theme FROM themes WHERE t_id = ?");
-					st2.setInt(1,Integer.valueOf(rs.getString(1)));
-					ResultSet rs2 = st2.executeQuery();
-					while (rs2.next()) {
-						result.put(rs2.getString(1),Double.valueOf(rs.getString(2))*v);
+					PreparedStatement innerSt = conn.prepareStatement("SELECT theme FROM themes WHERE t_id = ?");
+					innerSt.setInt(1,Integer.valueOf(rs.getString(1)));
+					ResultSet innerRs = innerSt.executeQuery();
+					while (innerRs.next()) {
+						result.put(innerRs.getString(1),Double.valueOf(rs.getString(2))*v);
 					}
-					rs2.close();
-					st2.close();
+					innerRs.close();
+					innerSt.close();
 				}
 				rs.close();
 				st.close();
