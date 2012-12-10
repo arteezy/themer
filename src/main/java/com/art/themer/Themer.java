@@ -79,14 +79,14 @@ public class Themer {
 				int v = Integer.valueOf(me.getValue().toString());
 
 				PreparedStatement st = conn.prepareStatement("SELECT t_id, p FROM dict WHERE word = ?");
-				st.setString(1,k);
+				st.setString(1, k);
 				ResultSet rs = st.executeQuery();
 				while (rs.next()) {
 					PreparedStatement innerSt = conn.prepareStatement("SELECT theme FROM themes WHERE t_id = ?");
-					innerSt.setInt(1,Integer.valueOf(rs.getString(1)));
+					innerSt.setInt(1, Integer.valueOf(rs.getString(1)));
 					ResultSet innerRs = innerSt.executeQuery();
 					while (innerRs.next()) {
-						result.put(innerRs.getString(1),Double.valueOf(rs.getString(2))*v);
+						result.put(innerRs.getString(1), Double.valueOf(rs.getString(2)) * v);
 					}
 					innerRs.close();
 					innerSt.close();
@@ -97,10 +97,11 @@ public class Themer {
 
 			Set<?> rset = sortTopThemes(result).entrySet();
 			Iterator<?> ri = rset.iterator();
+			
 			int cutter = 0;
 			while(ri.hasNext()) {
 				cutter++;
-				Map.Entry me = (Map.Entry)ri.next();
+				Map.Entry me = (Map.Entry) ri.next();
 				if (cutter > 10) result.remove(me.getKey());
 			}
 
@@ -118,9 +119,9 @@ public class Themer {
 			Set<?> pset = result.entrySet();
 			Iterator<?> pi = pset.iterator();
 			while(pi.hasNext()) {
-				Map.Entry me = (Map.Entry)pi.next();
+				Map.Entry me = (Map.Entry) pi.next();
 				double p = Double.valueOf(me.getValue().toString()) / (max/10 + min + max);
-				result.put((String) me.getKey(),p);
+				result.put((String) me.getKey(), p);
 			}
 
 			return result;
@@ -142,7 +143,7 @@ public class Themer {
 
 		for (String kword : words) {
 			kword = Stemmer.stem(kword.toLowerCase());
-			if (!hm.containsKey(kword))	hm.put(kword,Integer.valueOf(1));
+			if (!hm.containsKey(kword))	hm.put(kword, Integer.valueOf(1));
 			else hm.put(kword, Integer.valueOf(hm.get(kword).toString()) + 1);
 		}
 
@@ -170,7 +171,7 @@ public class Themer {
 		int cutter = 0;
 		while(i.hasNext()) {
 			cutter++;
-			Map.Entry me = (Map.Entry)i.next();
+			Map.Entry me = (Map.Entry) i.next();
 			if (cutter > 20) hm.remove(me.getKey());
 		}
 
