@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("unused")
 public class Servlet extends HttpServlet {
-
 	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream out = resp.getOutputStream();        
@@ -20,5 +19,4 @@ public class Servlet extends HttpServlet {
         out.flush();
         out.close();
     }
-    
 }
