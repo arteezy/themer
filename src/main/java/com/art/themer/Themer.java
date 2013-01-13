@@ -97,7 +97,7 @@ public class Themer {
 
 			Set<?> rset = sortTopThemes(result).entrySet();
 			Iterator<?> ri = rset.iterator();
-			
+
 			int cutter = 0;
 			while(ri.hasNext()) {
 				cutter++;
@@ -147,21 +147,26 @@ public class Themer {
 			else hm.put(kword, Integer.valueOf(hm.get(kword).toString()) + 1);
 		}
 
-		// Stoplist of meaningless words
-		// I wanted to read this from file, but it's only 150 words, so I decided to make this HUGE string
-		String stop = "и в во не что он на я с со как а то все она так его но да ты к у же вы за бы по " +
-				"только ее мне было вот от меня еще нет о из ему теперь когда даже ну вдруг ли если уже " +
-				"или ни быть был него до вас нибудь опять уж вам сказал ведь там потом себя ничего ей " +
-				"может они тут где есть надо ней для мы тебя их чем была сам чтоб без будто человек чего " +
-				"раз тоже себе под жизнь будет ж тогда кто этот говорил того потому этого какой совсем " +
-				"ним здесь этом один почти мой тем чтобы нее кажется сейчас были куда зачем сказать " +
-				"всех никогда сегодня можно при наконец два об другой хоть после над больше тот через " +
-				"эти нас про всего них какая много разве сказала три эту моя впрочем хорошо свою этой " +
-				"перед иногда лучше чуть том нельзя такой им более всегда конечно всю между";
+		conn = getConnection();
+		try {
+			List<String> stoplist = new ArrayList<String>();
+			
+			PreparedStatement st = conn.prepareStatement("SELECT word FROM stopwords");
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				stoplist.add(rs.getString(0));
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(1);
+		} catch (URISyntaxException e) {			
+			e.printStackTrace();
+			System.exit(2);
+		}
 
-		String[] sl = stop.split(" ");
-
-		for (String slword : sl) {
+		for (String slword : stoplist) {
 			slword = Stemmer.stem(slword);
 			hm.remove(slword);
 		}
