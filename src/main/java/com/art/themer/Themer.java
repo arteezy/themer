@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -147,8 +148,10 @@ public class Themer {
 			else hm.put(kword, Integer.valueOf(hm.get(kword).toString()) + 1);
 		}
 
-		conn = getConnection();
+		Connection conn = null;
 		try {
+			conn = getConnection();
+
 			List<String> stoplist = new ArrayList<String>();
 			
 			PreparedStatement st = conn.prepareStatement("SELECT word FROM stopwords");
@@ -158,17 +161,17 @@ public class Themer {
 			}
 			rs.close();
 			st.close();
+
+			for (String slword : stoplist) {
+				slword = Stemmer.stem(slword);
+				hm.remove(slword);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.exit(1);
 		} catch (URISyntaxException e) {			
 			e.printStackTrace();
 			System.exit(2);
-		}
-
-		for (String slword : stoplist) {
-			slword = Stemmer.stem(slword);
-			hm.remove(slword);
 		}
 
 		Set<?> set = sortTopWords(hm).entrySet();
