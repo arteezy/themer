@@ -157,7 +157,7 @@ public class Themer {
 			PreparedStatement st = conn.prepareStatement("SELECT word FROM stopwords");
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				stoplist.add(rs.getString(0));
+				stoplist.add(rs.getString(1));
 			}
 			rs.close();
 			st.close();
