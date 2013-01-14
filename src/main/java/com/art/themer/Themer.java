@@ -32,7 +32,7 @@ public class Themer {
 	    return DriverManager.getConnection(dbUrl, username, password);
 	}
 
-	public static HashMap<String, Integer> sortTopWords(HashMap<String, Integer> map) {
+	public static Map<String, Integer> sortTopWords(Map<String, Integer> map) {
 		List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
 
 		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
@@ -41,14 +41,14 @@ public class Themer {
 			}
 		});
 
-		HashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
+		Map<String, Integer> result = new LinkedHashMap<String, Integer>();
 		for (Map.Entry<String, Integer> entry : list) {
 			result.put(entry.getKey(), entry.getValue());
 		}
 		return result;
 	}
 
-	public static HashMap<String, Double> sortTopThemes(HashMap<String, Double> map) {
+	public static Map<String, Double> sortTopThemes(Map<String, Double> map) {
 		List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(map.entrySet());
 
 		Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
@@ -57,21 +57,21 @@ public class Themer {
 			}
 		});
 
-		HashMap<String, Double> result = new LinkedHashMap<String, Double>();
+		Map<String, Double> result = new LinkedHashMap<String, Double>();
 		for (Map.Entry<String, Double> entry : list) {
 			result.put(entry.getKey(), entry.getValue());
 		}
 		return result;
 	}
 
-	public static HashMap<String, Double> theme(String text) {
+	public static Map<String, Double> theme(String text) {
 		Connection conn = null;
 		try {
 			conn = getConnection();
 
-			HashMap<String, Double> result = new HashMap<String, Double>();
+			Map<String, Double> result = new HashMap<String, Double>();
 
-			HashMap<String, Integer> hm = filter(text);
+			Map<String, Integer> hm = filter(text);
 			Set<?> set = hm.entrySet();
 			Iterator<?> i = set.iterator();
 			while(i.hasNext()) {
@@ -137,10 +137,10 @@ public class Themer {
 		return null;
 	}
 
-	public static HashMap<String, Integer> filter(String text) {
+	public static Map<String, Integer> filter(String text) {
 		String[] words = text.replaceAll("[^а-яА-Я\\s]", "").split("\\s+");
 
-		HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		Map<String, Integer> hm = new HashMap<String, Integer>();
 
 		for (String kword : words) {
 			kword = Stemmer.stem(kword.toLowerCase());
@@ -187,7 +187,7 @@ public class Themer {
 	}
 
 	public static Set<?> getThemes(String text) {
-		HashMap<String, Double> themes = theme(text);
+		Map<String, Double> themes = theme(text);
 		Set<?> set = sortTopThemes(themes).entrySet();		
 		return set;
 	}
