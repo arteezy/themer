@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("unused")
 public class Servlet extends HttpServlet {
-	@Override
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream out = resp.getOutputStream();        
-        out.write("Successful deploy!".getBytes());
+        out.write("Success!".getBytes());
         out.flush();
         out.close();
     }

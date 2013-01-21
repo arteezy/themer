@@ -20,175 +20,175 @@ import java.util.Map;
 import java.util.Set;
 
 public class Themer {
-	
-	private static Connection getConnection() throws URISyntaxException, SQLException {
-	    URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
-	    String[] loginCredentials = dbUri.getUserInfo().split(":");
-	    String username = loginCredentials[0];
-	    String password = loginCredentials[1];
-	    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath() + ":" + dbUri.getPort();
+    private static Connection getConnection() throws URISyntaxException, SQLException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
-	    return DriverManager.getConnection(dbUrl, username, password);
-	}
+        String[] loginCredentials = dbUri.getUserInfo().split(":");
+        String username = loginCredentials[0];
+        String password = loginCredentials[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath() + ":" + dbUri.getPort();
 
-	public static Map<String, Integer> sortTopWords(Map<String, Integer> map) {
-		List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
+        return DriverManager.getConnection(dbUrl, username, password);
+    }
 
-		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-			public int compare(Map.Entry<String, Integer> m1, Map.Entry<String, Integer> m2) {
-				return (m2.getValue()).compareTo(m1.getValue());
-			}
-		});
+    public static Map<String, Integer> sortTopWords(Map<String, Integer> map) {
+        List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
 
-		Map<String, Integer> result = new LinkedHashMap<String, Integer>();
-		for (Map.Entry<String, Integer> entry : list) {
-			result.put(entry.getKey(), entry.getValue());
-		}
-		return result;
-	}
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> m1, Map.Entry<String, Integer> m2) {
+                return (m2.getValue()).compareTo(m1.getValue());
+            }
+        });
 
-	public static Map<String, Double> sortTopThemes(Map<String, Double> map) {
-		List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(map.entrySet());
+        Map<String, Integer> result = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
 
-		Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
-			public int compare(Map.Entry<String, Double> m1, Map.Entry<String, Double> m2) {
-				return (m2.getValue()).compareTo(m1.getValue());
-			}
-		});
+    public static Map<String, Double> sortTopThemes(Map<String, Double> map) {
+        List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(map.entrySet());
 
-		Map<String, Double> result = new LinkedHashMap<String, Double>();
-		for (Map.Entry<String, Double> entry : list) {
-			result.put(entry.getKey(), entry.getValue());
-		}
-		return result;
-	}
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+            public int compare(Map.Entry<String, Double> m1, Map.Entry<String, Double> m2) {
+                return (m2.getValue()).compareTo(m1.getValue());
+            }
+        });
 
-	public static Map<String, Double> theme(String text) {
-		Connection conn = null;
-		try {
-			conn = getConnection();
+        Map<String, Double> result = new LinkedHashMap<String, Double>();
+        for (Map.Entry<String, Double> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
 
-			Map<String, Double> result = new HashMap<String, Double>();
+    public static Map<String, Double> theme(String text) {
+        Connection conn = null;
+        try {
+            conn = getConnection();
 
-			Map<String, Integer> hm = filter(text);
-			Set<?> set = hm.entrySet();
-			Iterator<?> i = set.iterator();
-			while(i.hasNext()) {
-				Map.Entry me = (Map.Entry)i.next();
-				String k = (String) me.getKey();
-				int v = Integer.valueOf(me.getValue().toString());
+            Map<String, Double> result = new HashMap<String, Double>();
 
-				PreparedStatement st = conn.prepareStatement("SELECT t_id, p FROM dict WHERE word = ?");
-				st.setString(1, k);
-				ResultSet rs = st.executeQuery();
-				while (rs.next()) {
-					PreparedStatement innerSt = conn.prepareStatement("SELECT theme FROM themes WHERE t_id = ?");
-					innerSt.setInt(1, Integer.valueOf(rs.getString(1)));
-					ResultSet innerRs = innerSt.executeQuery();
-					while (innerRs.next()) {
-						result.put(innerRs.getString(1), Double.valueOf(rs.getString(2)) * v);
-					}
-					innerRs.close();
-					innerSt.close();
-				}
-				rs.close();
-				st.close();
-			}
+            Map<String, Integer> hm = filter(text);
+            Set<?> set = hm.entrySet();
+            Iterator<?> i = set.iterator();
+            while(i.hasNext()) {
+                Map.Entry me = (Map.Entry)i.next();
+                String k = (String) me.getKey();
+                int v = Integer.valueOf(me.getValue().toString());
 
-			Set<?> rset = sortTopThemes(result).entrySet();
-			Iterator<?> ri = rset.iterator();
+                PreparedStatement st = conn.prepareStatement("SELECT t_id, p FROM dict WHERE word = ?");
+                st.setString(1, k);
+                ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+                    PreparedStatement innerSt = conn.prepareStatement("SELECT theme FROM themes WHERE t_id = ?");
+                    innerSt.setInt(1, Integer.valueOf(rs.getString(1)));
+                    ResultSet innerRs = innerSt.executeQuery();
+                    while (innerRs.next()) {
+                        result.put(innerRs.getString(1), Double.valueOf(rs.getString(2)) * v);
+                    }
+                    innerRs.close();
+                    innerSt.close();
+                }
+                rs.close();
+                st.close();
+            }
 
-			int cutter = 0;
-			while(ri.hasNext()) {
-				cutter++;
-				Map.Entry me = (Map.Entry) ri.next();
-				if (cutter > 10) result.remove(me.getKey());
-			}
+            Set<?> rset = sortTopThemes(result).entrySet();
+            Iterator<?> ri = rset.iterator();
 
-			double max = 0;
-			Collection<Double> col = result.values();
-			for (Object val : col) {
-				Double num = Double.valueOf(val.toString());
-				if (num > max) max = num;
-			}
-			double min = max;
-			for (Object val : col) {
-				Double num = Double.valueOf(val.toString());
-				if (num < min) min = num;
-			}
-			Set<?> pset = result.entrySet();
-			Iterator<?> pi = pset.iterator();
-			while(pi.hasNext()) {
-				Map.Entry me = (Map.Entry) pi.next();
-				double p = Double.valueOf(me.getValue().toString()) / (max/10 + min + max);
-				result.put((String) me.getKey(), p);
-			}
+            int cutter = 0;
+            while(ri.hasNext()) {
+                cutter++;
+                Map.Entry me = (Map.Entry) ri.next();
+                if (cutter > 10) result.remove(me.getKey());
+            }
 
-			return result;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.exit(1);
-		} catch (URISyntaxException e) {			
-			e.printStackTrace();
-			System.exit(2);
-		}
-		return null;
-	}
+            double max = 0;
+            Collection<Double> col = result.values();
+            for (Object val : col) {
+                Double num = Double.valueOf(val.toString());
+                if (num > max) max = num;
+            }
+            double min = max;
+            for (Object val : col) {
+                Double num = Double.valueOf(val.toString());
+                if (num < min) min = num;
+            }
+            Set<?> pset = result.entrySet();
+            Iterator<?> pi = pset.iterator();
+            while(pi.hasNext()) {
+                Map.Entry me = (Map.Entry) pi.next();
+                double p = Double.valueOf(me.getValue().toString()) / (max/10 + min + max);
+                result.put((String) me.getKey(), p);
+            }
 
-	public static Map<String, Integer> filter(String text) {
-		String[] words = text.replaceAll("[^а-яА-Я\\s]", "").split("\\s+");
+            return result;
 
-		Map<String, Integer> hm = new HashMap<String, Integer>();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.exit(2);
+        }
+        return null;
+    }
 
-		for (String kword : words) {
-			kword = Stemmer.stem(kword.toLowerCase());
-			if (!hm.containsKey(kword))	hm.put(kword, Integer.valueOf(1));
-			else hm.put(kword, Integer.valueOf(hm.get(kword).toString()) + 1);
-		}
+    public static Map<String, Integer> filter(String text) {
+        String[] words = text.replaceAll("[^а-яА-Я\\s]", "").split("\\s+");
 
-		Connection conn = null;
-		try {
-			conn = getConnection();
+        Map<String, Integer> hm = new HashMap<String, Integer>();
 
-			List<String> stoplist = new ArrayList<String>();
-			
-			PreparedStatement st = conn.prepareStatement("SELECT word FROM stopwords");
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				stoplist.add(rs.getString(1));
-			}
-			rs.close();
-			st.close();
+        for (String kword : words) {
+            kword = Stemmer.stem(kword.toLowerCase());
+            if (!hm.containsKey(kword)) hm.put(kword, Integer.valueOf(1));
+            else hm.put(kword, Integer.valueOf(hm.get(kword).toString()) + 1);
+        }
 
-			for (String slword : stoplist) {
-				slword = Stemmer.stem(slword);
-				hm.remove(slword);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.exit(1);
-		} catch (URISyntaxException e) {			
-			e.printStackTrace();
-			System.exit(2);
-		}
+        Connection conn = null;
+        try {
+            conn = getConnection();
 
-		Set<?> set = sortTopWords(hm).entrySet();
-		Iterator<?> i = set.iterator();
-		int cutter = 0;
-		while(i.hasNext()) {
-			cutter++;
-			Map.Entry me = (Map.Entry) i.next();
-			if (cutter > 20) hm.remove(me.getKey());
-		}
+            List<String> stoplist = new ArrayList<String>();
 
-		return hm;
-	}
+            PreparedStatement st = conn.prepareStatement("SELECT word FROM stopwords");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                stoplist.add(rs.getString(1));
+            }
+            rs.close();
+            st.close();
 
-	public static Set<?> getThemes(String text) {
-		Map<String, Double> themes = theme(text);
-		Set<?> set = sortTopThemes(themes).entrySet();		
-		return set;
-	}
+            for (String slword : stoplist) {
+                slword = Stemmer.stem(slword);
+                hm.remove(slword);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.exit(2);
+        }
+
+        Set<?> set = sortTopWords(hm).entrySet();
+        Iterator<?> i = set.iterator();
+        int cutter = 0;
+        while(i.hasNext()) {
+            cutter++;
+            Map.Entry me = (Map.Entry) i.next();
+            if (cutter > 20) hm.remove(me.getKey());
+        }
+
+        return hm;
+    }
+
+    public static Set<?> getThemes(String text) {
+        Map<String, Double> themes = theme(text);
+        Set<?> set = sortTopThemes(themes).entrySet();
+        return set;
+    }
 }
