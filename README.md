@@ -11,24 +11,26 @@ The current version of this application is running on http://themer.herokuapp.co
 The algorithm will analyze the frequency of words from a given text. Then it will fetch these words from the dictionary. The dictionary is built using Data Mining methods based on data from [Yandex.Catalog](http://catalog.yandex.ru/) web-service.
 
 ## Technologies used
+Technology stack is pretty minimal, as lightweight as possible. It's almost entirely bare Java:
 
 * Java
 * Jetty
+* JDBC
 * PostgreSQL
 * Maven
 
 ## Running the application
 
-The application can be built with Maven.
+The application is built with Maven.
 
-First build with:
+Let Maven do the work:
 
     mvn clean install
 
-Then run it with:
+Then run it:
 
     java -cp target/classes:target/dependency/* com.art.themer.Main
 
 ## Deploying
 
-The project is ready to deploy on [Heroku](http://www.heroku.com/) via git.
+The project is ready to deploy on [Heroku](http://www.heroku.com/) via git. Just create heroku app, set-up git and push this repo as is.
