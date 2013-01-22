@@ -21,7 +21,7 @@ import java.util.Set;
 
 public class Themer {
 
-    private static Connection getConnection() throws URISyntaxException, SQLException {
+    private Connection getConnection() throws URISyntaxException, SQLException {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
         String[] loginCredentials = dbUri.getUserInfo().split(":");
@@ -32,7 +32,7 @@ public class Themer {
         return DriverManager.getConnection(dbUrl, username, password);
     }
 
-    public static Map<String, Integer> sortTopWords(Map<String, Integer> map) {
+    public Map<String, Integer> sortTopWords(Map<String, Integer> map) {
         List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
 
         Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
@@ -48,7 +48,7 @@ public class Themer {
         return result;
     }
 
-    public static Map<String, Double> sortTopThemes(Map<String, Double> map) {
+    public Map<String, Double> sortTopThemes(Map<String, Double> map) {
         List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(map.entrySet());
 
         Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
@@ -64,7 +64,7 @@ public class Themer {
         return result;
     }
 
-    public static Map<String, Double> theme(String text) {
+    public Map<String, Double> theme(String text) {
         Connection conn = null;
         try {
             conn = getConnection();
@@ -137,7 +137,7 @@ public class Themer {
         return null;
     }
 
-    public static Map<String, Integer> filter(String text) {
+    public Map<String, Integer> filter(String text) {
         String[] words = text.replaceAll("[^а-яА-Я\\s]", "").split("\\s+");
 
         Map<String, Integer> hm = new HashMap<String, Integer>();
@@ -186,7 +186,7 @@ public class Themer {
         return hm;
     }
 
-    public static Set<?> getThemes(String text) {
+    public Set<?> getThemes(String text) {
         Map<String, Double> themes = theme(text);
         Set<?> set = sortTopThemes(themes).entrySet();
         return set;

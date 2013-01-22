@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServletOutputStream out = resp.getOutputStream();        
+        Themer myta = new Themer();
+        ServletOutputStream out = resp.getOutputStream();
         out.write("Success!".getBytes());
         out.flush();
         out.close();
